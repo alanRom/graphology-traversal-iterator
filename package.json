@@ -14,7 +14,8 @@
   "scripts": {
     "prepublishOnly": "npm test",
     "build": "tsc",
-    "test": "npm run build && mocha test.js"
+    "test": "npm run build && mocha test.js",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -47,6 +48,7 @@
   },
   "dependencies": {
     "graphology-indices": "^0.17.0",
+    "graphology-traversal-iterator": "github:alanRom/graphology-traversal-iterator",
     "graphology-utils": "^2.0.0"
   },
   "devDependencies": {
