@@ -48,7 +48,6 @@
   },
   "dependencies": {
     "graphology-indices": "^0.17.0",
-    "graphology-traversal-iterator": "github:alanRom/graphology-traversal-iterator",
     "graphology-utils": "^2.0.0"
   },
   "devDependencies": {

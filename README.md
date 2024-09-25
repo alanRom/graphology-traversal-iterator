@@ -2,12 +2,6 @@
 Refactored BFS and DFS traversal implementations of [`Graphology`](https://graphology.github.io) to support the JS Iterator protocol instead of callbacks
 
 
-## Installation
-
-```
-npm install graphology-traversal
-```
-
 ## Usage
 
 - [bfs](#bfs)
