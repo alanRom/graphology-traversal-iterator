@@ -1,7 +1,7 @@
 {
-  "name": "graphology-traversal",
-  "version": "0.3.1",
-  "description": "Traversal functions for graphology.",
+  "name": "graphology-traversal-iterator",
+  "version": "1.0",
+  "description": "Traversal functions for graphology supporting the Iterator protocol.",
   "main": "index.js",
   "files": [
     "*.d.ts",
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/graphology/graphology.git"
+    "url": "git+https://github.com/alanRom/graphology-traversal-iterator"
   },
   "keywords": [
     "graph",
@@ -28,6 +28,10 @@
     "bfs"
   ],
   "contributors": [
+    {
+      "name": "Alan Romano",
+      "url": "https://github.com/alanRom"
+    },
     {
       "name": "Guillaume Plique",
       "url": "http://github.com/Yomguithereal"
