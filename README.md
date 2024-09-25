@@ -1,7 +1,6 @@
 # Graphology Traversal Iterator
-Refactor BFS and DFS traversal libraries of Graphology to support the Iterator protocol instead of callbacks
+Refactored BFS and DFS traversal implementations of [`Graphology`](https://graphology.github.io) to support the JS Iterator protocol instead of callbacks
 
-Miscellaneous traversal functions to be used with [`graphology`](https://graphology.github.io).
 
 ## Installation
 
@@ -21,24 +20,23 @@ npm install graphology-traversal
 Perform a BFS (Breadth-First Search) over the given graph using a callback.
 
 ```js
-import {bfs} from 'graphology-traversal';
-// Alternatively, to only load the relevant code
-import {bfs} from 'graphology-traversal/bfs';
+import { bfs, bfsFromNode } from './index';
 
-bfs(graph, function (node, attr, depth) {
+for(const [node, attr, depth] of bfs(graph)){
   console.log(node, attr, depth);
-});
+}
 
 // Stopping at depth 3
-bfs(graph, function (node, attr, depth) {
-  return depth >= 3;
-});
+for(const [node, attr, depth] of bfs(graph)){
+  if(depth >= 3){
+    break;
+  }
+}
 ```
 
 _Arguments_
 
 - **graph** _Graph_: a graphology instance.
-- **callback** _function_: iteration callback taking the traversed node, its attributes and the traversal's depth. Returning `true` will prevent the traversal from following the next neighbors.
 - **options** _?object_: traversal options:
   - **mode** _?string_ [`outbound`]: type of neighbors to traverse.
 
@@ -47,25 +45,24 @@ _Arguments_
 Perform a BFS (Breadth-First Search) over the given graph, starting from the given node, using a callback.
 
 ```js
-import {bfsFromNode} from 'graphology-traversal';
-// Alternatively, to only load the relevant code
-import {bfsFromNode} from 'graphology-traversal/bfs';
+import { bfs, bfsFromNode } from './index';
 
-bfsFromNode(graph, 'node1', function (node, attr, depth) {
+for(const [node, attr, depth] of bfsFromNode(graph, 'node1')){
   console.log(node, attr, depth);
-});
+}
 
 // Stopping at depth 3
-bfsFromNode(graph, 'node1', function (node, attr, depth) {
-  return depth >= 3;
-});
+for(const [node, attr, depth] of bfsFromNode(graph, 'node1')){
+  if(depth >= 3){
+    break;
+  }
+}
 ```
 
 _Arguments_
 
 - **graph** _Graph_: a graphology instance.
 - **node** _string\|number_: starting node.
-- **callback** _function_: iteration callback taking the traversed node, its attributes and the traversal's depth. Returning `true` will prevent the traversal from following the next neighbors.
 - **options** _?object_: traversal options:
   - **mode** _?string_ [`outbound`]: type of neighbors to traverse.
 
@@ -74,24 +71,23 @@ _Arguments_
 Perform a DFS (Depth-First Search) over the given graph using a callback.
 
 ```js
-import {dfs} from 'graphology-traversal';
-// Alternatively, to only load the relevant code
-import {dfs} from 'graphology-traversal/dfs';
+import {dfs, dfsFromNode} from './index';
 
-dfs(graph, function (node, attr, depth) {
+for(const [node, attr, depth] of dfs(graph)){
   console.log(node, attr, depth);
-});
+}
 
 // Stopping at depth 3
-dfs(graph, function (node, attr, depth) {
-  return depth >= 3;
-});
+for(const [node, attr, depth] of dfs(graph)){
+  if(depth >= 3){
+    break;
+  }
+}
 ```
 
 _Arguments_
 
 - **graph** _Graph_: a graphology instance.
-- **callback** _function_: iteration callback taking the traversed node, its attributes and the traversal's depth. Returning `true` will prevent the traversal from following the next neighbors.
 - **options** _?object_: traversal options:
   - **mode** _?string_ [`outbound`]: type of neighbors to traverse.
 
@@ -100,24 +96,23 @@ _Arguments_
 Perform a DFS (Depth-First Search) over the given graph, starting from the given node, using a callback.
 
 ```js
-import {dfsFromNode} from 'graphology-traversal';
-// Alternatively, to only load the relevant code
-import {dfsFromNode} from 'graphology-traversal/dfs';
+import { dfs, dfsFromNode } from './index';
 
-dfsFromNode(graph, 'node1', function (node, attr, depth) {
+for(const [node, attr, depth] of dfsFromNode(graph, 'node1')){
   console.log(node, attr, depth);
-});
+}
 
 // Stopping at depth 3
-dfsFromNode(graph, 'node1', function (node, attr, depth) {
-  return depth >= 3;
-});
+for(const [node, attr, depth] of dfsFromNode(graph, 'node1')){
+  if(depth >= 3){
+    break;
+  }
+}
 ```
 
 _Arguments_
 
 - **graph** _Graph_: a graphology instance.
 - **node** _string\|number_: starting node.
-- **callback** _function_: iteration callback taking the traversed node, its attributes and the traversal's depth. Returning `true` will prevent the traversal from following the next neighbors.
 - **options** _?object_: traversal options:
   - **mode** _?string_ [`outbound`]: type of neighbors to traverse.
