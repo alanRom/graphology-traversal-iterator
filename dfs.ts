@@ -8,6 +8,7 @@ import isGraph from 'graphology-utils/is-graph';
 import DFSStack from 'graphology-indices/dfs-stack';
 import { AbstractGraph, Attributes } from 'graphology-types';
 import { TraversalModes, TraversalRecord, getNeighborsForNode, getTraversalModeFromString } from './utils';
+import { TraversalMode } from './types';
 
 /**
  * DFS traversal in the given graph using a callback function
@@ -18,7 +19,7 @@ import { TraversalModes, TraversalRecord, getNeighborsForNode, getTraversalModeF
  * @param {string}     mode         - Traversal mode.
  */
 
-function *abstractDfs(graph: AbstractGraph, startingNode: string | null = null, options?: { mode?: TraversalModes | string }): Generator<[string, Attributes, number], void, unknown> {
+function *abstractDfs(graph: AbstractGraph, startingNode: string | null = null, options?: { mode?: TraversalModes | TraversalMode }): Generator<[string, Attributes, number], void, unknown> {
     options = options || {};
     
     const traversalMode = options.mode ? (typeof options.mode === 'string' ? getTraversalModeFromString(options.mode) : options.mode) : TraversalModes.Outbound;
@@ -69,7 +70,7 @@ function *abstractDfs(graph: AbstractGraph, startingNode: string | null = null, 
     }
 }
 
-export const dfs = function (graph: AbstractGraph, options?: { mode?: TraversalModes | string }) {
+export const dfs = function (graph: AbstractGraph, options?: { mode?: TraversalModes | TraversalMode }) {
     return abstractDfs(graph, null, options);
 };
 

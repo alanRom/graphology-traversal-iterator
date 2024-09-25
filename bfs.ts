@@ -8,6 +8,7 @@ import isGraph from 'graphology-utils/is-graph';
 import BFSQueue from 'graphology-indices/bfs-queue';
 import { AbstractGraph, Attributes, NodeEntry } from 'graphology-types';
 import { TraversalRecord, TraversalModes, getNeighborsForNode, getTraversalModeFromString } from './utils';
+import { TraversalMode } from './types';
 
 /**
  * BFS traversal in the given graph using a callback function
@@ -18,7 +19,7 @@ import { TraversalRecord, TraversalModes, getNeighborsForNode, getTraversalModeF
  * @param {object}   options      - Options:
  * @param {string}     mode         - Traversal mode.
  */
-function *abstractBfs(graph: AbstractGraph, startingNode: string | null, options?: { mode?: TraversalModes | string }): Generator<[string, Attributes, number], void, unknown> {
+function *abstractBfs(graph: AbstractGraph, startingNode: string | null, options?: { mode?: TraversalModes | TraversalMode }): Generator<[string, Attributes, number], void, unknown> {
     options = options || {};
     
     const traversalMode = options.mode ? (typeof options.mode == 'string' ? getTraversalModeFromString(options.mode) : options.mode) : TraversalModes.Outbound;
@@ -68,7 +69,7 @@ function *abstractBfs(graph: AbstractGraph, startingNode: string | null, options
         }
 }
 
-export const bfs = function (graph: AbstractGraph, options?: { mode?: TraversalModes | string }) {
+export const bfs = function (graph: AbstractGraph, options?: { mode?: TraversalModes | TraversalMode }) {
     return abstractBfs(graph, null, options);
 };
 

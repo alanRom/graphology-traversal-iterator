@@ -1,12 +1,13 @@
 import Graph, {Attributes} from 'graphology-types';
-import {TraversalCallback, TraversalOptions} from './types';
+import {TraversalOptions} from './types';
 
 export function bfs<N extends Attributes = Attributes>(
   graph: Graph<N>,
   options?: TraversalOptions
-): void;
+): Generator<[string, Attributes, number], void, unknown>;
+
 export function bfsFromNode<N extends Attributes = Attributes>(
   graph: Graph<N>,
   node: unknown,
   options?: TraversalOptions
-): void;
+): Generator<[string, Attributes, number], void, unknown>;
