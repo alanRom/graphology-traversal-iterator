@@ -1,16 +1,18 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.bfsFromNode = exports.bfs = void 0;
 /**
  * Graphology Traversal BFS
  * =========================
  *
  * Breadth-First Search traversal function.
  */
-var isGraph = require('graphology-utils/is-graph');
-var BFSQueue = require('graphology-indices/bfs-queue');
-var utils = require('./utils');
-
-var TraversalRecord = utils.TraversalRecord;
-var capitalize = utils.capitalize;
-
+const is_graph_1 = __importDefault(require("graphology-utils/is-graph"));
+const bfs_queue_1 = __importDefault(require("graphology-indices/bfs-queue"));
+const utils_1 = require("./utils");
 /**
  * BFS traversal in the given graph using a callback function
  *
@@ -20,65 +22,42 @@ var capitalize = utils.capitalize;
  * @param {object}   options      - Options:
  * @param {string}     mode         - Traversal mode.
  */
-function abstractBfs(graph, startingNode, callback, options) {
-  options = options || {};
-
-  if (!isGraph(graph))
-    throw new Error(
-      'graphology-traversal/bfs: expecting a graphology instance.'
-    );
-
-  if (typeof callback !== 'function')
-    throw new Error(
-      'graphology-traversal/bfs: given callback is not a function.'
-    );
-
-  // Early termination
-  if (graph.order === 0) return;
-
-  var queue = new BFSQueue(graph);
-
-  var forEachNeighbor =
-    graph['forEach' + capitalize(options.mode || 'outbound') + 'Neighbor'].bind(
-      graph
-    );
-
-  var forEachNode;
-
-  if (startingNode === null) {
-    forEachNode = queue.forEachNodeYetUnseen.bind(queue);
-  } else {
-    forEachNode = function (fn) {
-      startingNode = '' + startingNode;
-      fn(startingNode, graph.getNodeAttributes(startingNode));
-    };
-  }
-
-  var record, stop;
-
-  function visit(neighbor, attr) {
-    queue.pushWith(
-      neighbor,
-      new TraversalRecord(neighbor, attr, record.depth + 1)
-    );
-  }
-
-  forEachNode(function (node, attr) {
-    queue.pushWith(node, new TraversalRecord(node, attr, 0));
-
-    while (queue.size !== 0) {
-      record = queue.shift();
-
-      stop = callback(record.node, record.attributes, record.depth);
-
-      if (stop === true) continue;
-
-      forEachNeighbor(record.node, visit);
+function* abstractBfs(graph, startingNode, options) {
+    options = options || {};
+    const traversalMode = options.mode ? (typeof options.mode == 'string' ? (0, utils_1.getTraversalModeFromString)(options.mode) : options.mode) : utils_1.TraversalModes.Outbound;
+    if (!(0, is_graph_1.default)(graph))
+        throw new Error('graphology-traversal/bfs: expecting a graphology instance.');
+    // Early termination
+    if (graph.order === 0)
+        return;
+    const queue = new bfs_queue_1.default(graph);
+    const nodesYetUnseen = new Set(graph.nodes());
+    const startingNodeToUse = startingNode == null ? graph.nodes()[0] : startingNode.toString();
+    let record;
+    queue.pushWith(startingNodeToUse, new utils_1.TraversalRecord(startingNodeToUse, graph.getNodeAttributes(startingNodeToUse), 0));
+    while (queue.size !== 0 || nodesYetUnseen.size > 0) {
+        record = queue.shift();
+        if (record === undefined) {
+            if (nodesYetUnseen.size > 0 && startingNode === null) {
+                const nextUnseen = nodesYetUnseen.values().next().value;
+                record = new utils_1.TraversalRecord(nextUnseen, graph.getNodeAttributes(nextUnseen), 0);
+            }
+            else {
+                break;
+            }
+        }
+        if (!nodesYetUnseen.has(record.node)) {
+            continue;
+        }
+        nodesYetUnseen.delete(record.node);
+        yield [record.node, record.attributes, record.depth];
+        for (const neighbor of (0, utils_1.getNeighborsForNode)(graph, record.node, traversalMode)) {
+            queue.pushWith(neighbor.neighbor, new utils_1.TraversalRecord(neighbor.neighbor, neighbor.attributes, record.depth + 1));
+        }
     }
-  });
 }
-
-exports.bfs = function (graph, callback, options) {
-  return abstractBfs(graph, null, callback, options);
+const bfs = function (graph, options) {
+    return abstractBfs(graph, null, options);
 };
+exports.bfs = bfs;
 exports.bfsFromNode = abstractBfs;
