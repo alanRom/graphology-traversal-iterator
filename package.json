@@ -1,6 +1,6 @@
 {
   "name": "graphology-traversal-iterator",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Traversal functions for graphology supporting the Iterator protocol.",
   "main": "index.js",
   "files": [
