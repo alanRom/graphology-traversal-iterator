@@ -1,6 +1,6 @@
 {
-  "name": "graphology-traversal-iterator",
-  "version": "0.0.4",
+  "name": "@alanrom/graphology-traversal-iterator",
+  "version": "1.0.0",
   "description": "Traversal functions for graphology supporting the Iterator protocol.",
   "main": "index.js",
   "files": [
@@ -19,7 +19,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alanRom/graphology-traversal-iterator"
+    "url": "https://github.com/alanRom/graphology-traversal-iterator.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "keywords": [
     "graph",
