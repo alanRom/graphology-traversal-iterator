@@ -46,12 +46,10 @@
     "url": "https://github.com/graphology/graphology/issues"
   },
   "homepage": "https://github.com/graphology/graphology#readme",
-  "peerDependencies": {
-    "graphology-types": ">=0.20.0"
-  },
   "dependencies": {
     "graphology-indices": "^0.17.0",
-    "graphology-utils": "^2.0.0"
+    "graphology-utils": "^2.0.0",
+    "graphology-types": ">=0.20.0"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.8",
